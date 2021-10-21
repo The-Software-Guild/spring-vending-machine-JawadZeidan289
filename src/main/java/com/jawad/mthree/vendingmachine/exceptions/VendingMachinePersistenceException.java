@@ -1,4 +1,4 @@
-package main.java.com.jawad.mthree.vendingmachine.exceptions;
+package com.jawad.mthree.vendingmachine.exceptions;
 
 public class VendingMachinePersistenceException extends Exception {
 

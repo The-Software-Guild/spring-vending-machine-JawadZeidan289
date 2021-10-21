@@ -1,4 +1,4 @@
-package main.java.com.jawad.mthree.vendingmachine.model;
+package com.jawad.mthree.vendingmachine.model;
 
-public class VendingMachineAuditDaoImpl {
+public class VendingMachineAuditDaoImpl implements VendingMachineAuditDao {
 }

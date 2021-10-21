@@ -1,4 +1,4 @@
-package main.java.com.jawad.mthree.vendingmachine.view;
+package com.jawad.mthree.vendingmachine.view;
 
 public interface UserIO {
 
