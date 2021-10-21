@@ -15,7 +15,13 @@ public class VendingMachineView {
     public int printMenuAndGetSelection(List<Product> productList) {
         io.print("Products:");
 
-        productList.stream().forEach(s -> io.print(s.toString()));
+        int index = 1;
+        for(Product p : productList) {
+            if(p.getQuantity() > 0) {
+                io.print(index + ". " + p.toString());
+                index++;
+            }
+        }
 
         io.print("");
         io.print("1. Purchase Product");
@@ -41,27 +47,38 @@ public class VendingMachineView {
     public int getPoundInput() {
         return io.readInt("How many Pounds would you like to insert?");
     }
+
     public int get50PenceInput() {
-        return io.readInt("How many 50Ps would you like to insert?");
+        return io.readInt("How many 50 Pennies would you like to insert?");
     }
+
     public int get20PenceInput() {
-        return io.readInt("How many 20Ps would you like to insert?");
+        return io.readInt("How many 20 Pennies would you like to insert?");
     }
+
     public int get10PenceInput() {
-        return io.readInt("How many 10Ps would you like to insert?");
+        return io.readInt("How many 10 Pennies would you like to insert?");
     }
 
     public int get5PenceInput() {
-        return io.readInt("How many 5Ps would you like to insert?");
+        return io.readInt("How many 5 Pennies would you like to insert?");
     }
 
     public int get1PenceInput() {
-        return io.readInt("How many 1Ps would you like to insert?");
+        return io.readInt("How many 1 Pennies would you like to insert?");
+    }
+
+    public int getPurchaseOption() {
+        return io.readInt("Which item would you like to buy?");
     }
 
     public void displayErrorMessage(String errorMsg) {
         io.print("=== ERROR ===");
         io.print(errorMsg);
+    }
+
+    public void printPurchaseSuccessMessage() {
+        io.print("Transaction Successful!");
     }
 
     public void displayExitBanner() {
@@ -70,5 +87,26 @@ public class VendingMachineView {
 
     public void displayCashInsertionBanner() {
         io.print("=== Insert Cash ===");
+    }
+
+    public void print(String msg) {
+        io.print(msg);
+    }
+
+    public void printErr(String msg) {
+        io.printErr(msg);
+    }
+
+    public void displayChange(int numOfPounds, int numOf50, int numOf20, int numOf10, int numOf5, int numOf1) {
+        io.print("Pounds: " + numOfPounds);
+        io.print("50 Pennies: " + numOf50);
+        io.print("20 Pennies: " + numOf20);
+        io.print("10 Pennies: " + numOf10);
+        io.print("5 Pennies: " + numOf5);
+        io.print("1 Pennies: " + numOf1);
+    }
+
+    public void displayThankYouMessage() {
+        io.print("Thanks for using the vending machine!");
     }
 }

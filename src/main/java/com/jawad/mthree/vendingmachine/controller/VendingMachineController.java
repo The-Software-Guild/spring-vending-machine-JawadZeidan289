@@ -12,6 +12,7 @@ public class VendingMachineController {
 
     private final VendingMachineView view;
     private final VendingMachineService service;
+    private List<Product> productList;
 
     public VendingMachineController(VendingMachineService service, VendingMachineView view) {
         this.service = service;
@@ -23,12 +24,19 @@ public class VendingMachineController {
         int menuSelection = 0;
         try {
             while(running) {
-
-                menuSelection = getMenuSelection();
+                productList = service.getProductList();
+                view.print("");
+                printBalance();
+                view.print("");
+                menuSelection = getMenuSelection(productList);
 
                 switch (menuSelection) {
                     case 1:
                         // purchase
+                        if(purchaseItem()) {
+                            returnChange();
+                            running = false;
+                        }
                         break;
                     case 2:
                         // insert cash
@@ -36,6 +44,7 @@ public class VendingMachineController {
                         break;
                     case 3:
                         // exit
+                        returnChange();
                         running = false;
                         break;
                     default:
@@ -43,12 +52,35 @@ public class VendingMachineController {
                 }
             }
             exitMessage();
-        } catch (VendingMachinePersistenceException e) {
+        } catch (Exception e) {
             view.displayErrorMessage(e.getMessage());
         }
     }
 
+    private boolean purchaseItem() {
+        int option = view.getPurchaseOption();
+        try {
+            Product chosenProduct = productList.get(option-1);
+            double productPrice = chosenProduct.getPrice();
+            double currentBalance = service.getBalance();
+            view.print("Chosen Product:\n" + chosenProduct.toString());
+            if(currentBalance > productPrice) {
+                service.setBalance(currentBalance - productPrice);
+                service.decrementStock(chosenProduct);
+                view.printPurchaseSuccessMessage();
+                return true;
+            } else {
+                view.displayErrorMessage("Transaction Failed: Insufficient balance!");
+            }
+        } catch(Exception e) {
+            view.displayErrorMessage("Option does not exist!");
+            return false;
+        }
+        return false;
+    }
+
     private void insertCash() {
+        view.print("");
         view.displayCashInsertionBanner();
         boolean running = true;
         int menuSelection = 0;
@@ -94,13 +126,39 @@ public class VendingMachineController {
         }
     }
 
-
-    private int getMenuSelection() throws VendingMachinePersistenceException {
-        List<Product> productList = service.getProductList();
+    private int getMenuSelection(List<Product> productList) {
         return view.printMenuAndGetSelection(productList);
+    }
+
+    private void printBalance() {
+        double balance = service.getBalance();
+        view.print("Your balance is £" + balance);
+    }
+
+    private List<Product> getProducts() throws VendingMachinePersistenceException {
+        return service.getProductList();
     }
 
     private void exitMessage() {
         view.displayExitBanner();
     }
+
+    private void returnChange() {
+        view.print("");
+        view.print("Here is your change:\n");
+        double balance = service.getBalance();
+        int numOfPounds = (int) Math.floor(balance);
+        balance -= numOfPounds;
+
+        int numOf50 = 0;
+        int numOf20 = 0;
+        int numOf10 = 0;
+        int numOf5 = 0;
+        int numOf1 = 0;
+
+        view.displayChange(numOfPounds,numOf50,numOf20,numOf10,numOf5,numOf1);
+        view.print("");
+        view.displayThankYouMessage();
+    }
+
 }

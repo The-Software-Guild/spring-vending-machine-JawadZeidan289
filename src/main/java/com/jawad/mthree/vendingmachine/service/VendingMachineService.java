@@ -12,4 +12,6 @@ public interface VendingMachineService {
     void setBalance(double balance);
 
     List<Product> getProductList() throws VendingMachinePersistenceException;
+
+    void decrementStock(Product product) throws VendingMachinePersistenceException;
 }

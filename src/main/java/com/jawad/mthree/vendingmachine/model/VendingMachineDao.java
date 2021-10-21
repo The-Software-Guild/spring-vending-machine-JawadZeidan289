@@ -6,8 +6,12 @@ import java.util.List;
 
 public interface VendingMachineDao {
 
-    boolean addProduct(String title, Product dvd) throws VendingMachinePersistenceException;
-
     List<Product> getProducts() throws VendingMachinePersistenceException;
+
+    void decrementStock(Product product) throws VendingMachinePersistenceException;
+
+    void removeProduct(Product product) throws VendingMachinePersistenceException;
+
+    void addProduct(Product product) throws VendingMachinePersistenceException;
 
 }

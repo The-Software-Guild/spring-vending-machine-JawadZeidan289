@@ -23,11 +23,18 @@ public class VendingMachineServiceImpl implements VendingMachineService {
     }
 
     public void setBalance(double balance) {
-        System.out.println("whent thru set balance method");
         this.balance = balance;
     }
 
     public List<Product> getProductList() throws VendingMachinePersistenceException {
         return dao.getProducts();
+    }
+
+    public void decrementStock(Product product) throws VendingMachinePersistenceException {
+        dao.decrementStock(product);
+        if(product.getQuantity() < 1) {
+            dao.removeProduct(product);
+            dao.addProduct(product);
+        }
     }
 }

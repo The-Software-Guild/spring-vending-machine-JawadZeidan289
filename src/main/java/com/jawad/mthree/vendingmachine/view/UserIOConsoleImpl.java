@@ -19,6 +19,11 @@ public class UserIOConsoleImpl implements UserIO {
         System.out.println(msg);
     }
 
+    @Override
+    public void printErr(String msg) {
+        System.err.println(msg);
+    }
+
     /**
      *
      * A simple method that takes in a message to display on the console,

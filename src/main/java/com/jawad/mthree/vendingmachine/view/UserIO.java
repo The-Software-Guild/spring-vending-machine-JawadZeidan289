@@ -4,6 +4,8 @@ public interface UserIO {
 
     void print(String msg);
 
+    void printErr(String msg);
+
     double readDouble(String prompt);
 
     double readDouble(String prompt, double min, double max);
