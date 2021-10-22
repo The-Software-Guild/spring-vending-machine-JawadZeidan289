@@ -36,5 +36,6 @@ public class VendingMachineServiceImpl implements VendingMachineService {
             dao.removeProduct(product);
             dao.addProduct(product);
         }
+        auditDao.writeAuditEntry("Product " + product.getName() + " bought. New quantity is " + product.getQuantity());
     }
 }
