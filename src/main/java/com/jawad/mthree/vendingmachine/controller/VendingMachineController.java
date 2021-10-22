@@ -151,10 +151,34 @@ public class VendingMachineController {
         balance -= numOfPounds;
 
         int numOf50 = 0;
+        while(balance - Change.FIFTY_PENCE.value > 0.00) {
+            balance = balance - Change.FIFTY_PENCE.value;
+            numOf50++;
+        }
+
         int numOf20 = 0;
+        while(balance - Change.TWENTY_PENCE.value > 0.00) {
+            balance = balance - Change.TWENTY_PENCE.value;
+            numOf20++;
+        }
+
         int numOf10 = 0;
+        while(balance - Change.TEN_PENCE.value > 0.00) {
+            balance = balance - Change.TEN_PENCE.value;
+            numOf10++;
+        }
+
         int numOf5 = 0;
+        while(balance - Change.FIVE_PENCE.value > 0.00) {
+            balance = balance - Change.FIVE_PENCE.value;
+            numOf5++;
+        }
+
         int numOf1 = 0;
+        while(balance - Change.ONE_PENCE.value > 0.00) {
+            balance = balance - Change.ONE_PENCE.value;
+            numOf1++;
+        }
 
         view.displayChange(numOfPounds,numOf50,numOf20,numOf10,numOf5,numOf1);
         view.print("");

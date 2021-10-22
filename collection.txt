@@ -1,5 +1,5 @@
-snickers::1.00::15
-ratcola::5.00::6
-toilet roll::5.00::10
-window cleaner::10.00::1
-tissues::0.99::0
+snickers::1.0::14
+coca cola::5.0::6
+toilet roll::5.0::10
+window cleaner::10.0::2
+tissues::0.99::4

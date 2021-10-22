@@ -62,8 +62,6 @@ public class VendingMachineDaoImpl implements VendingMachineDao {
     }
 
     private void loadFromFile() throws VendingMachinePersistenceException {
-        System.out.println("Loading from file");
-        List<Product> newList = new ArrayList<>();
         Scanner scanner;
 
         try {
@@ -81,9 +79,13 @@ public class VendingMachineDaoImpl implements VendingMachineDao {
 
             Product newProduct = unmarshallProduct(line);
 
-            newList.add(newProduct);
+            if(containsProductWithName(products, newProduct.getName())) {
+                // dont add
+                System.out.println("already exists");
+            } else {
+                products.add(newProduct);
+            }
         }
-        products = newList;
         scanner.close();
     }
 
@@ -108,6 +110,10 @@ public class VendingMachineDaoImpl implements VendingMachineDao {
             out.flush();
         }
         out.close();
+    }
+
+    public boolean containsProductWithName(List<Product> list, String nameToCheck) {
+        return list.stream().filter(o -> o.getName().equals(nameToCheck)).findFirst().isPresent();
     }
 
 }
