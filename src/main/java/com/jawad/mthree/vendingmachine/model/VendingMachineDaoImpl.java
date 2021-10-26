@@ -1,16 +1,20 @@
 package com.jawad.mthree.vendingmachine.model;
 
 import com.jawad.mthree.vendingmachine.exceptions.VendingMachinePersistenceException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.util.*;
 
+@Component
 public class VendingMachineDaoImpl implements VendingMachineDao {
 
     private List<Product> products = new ArrayList<>();
     public final String ROSTER_FILE;
     public static final String DELIMITER = "::";
 
+    @Autowired
     public VendingMachineDaoImpl() {
         ROSTER_FILE= "collection.txt";
     }

@@ -5,15 +5,19 @@ import com.jawad.mthree.vendingmachine.model.Change;
 import com.jawad.mthree.vendingmachine.model.Product;
 import com.jawad.mthree.vendingmachine.service.VendingMachineService;
 import com.jawad.mthree.vendingmachine.view.VendingMachineView;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class VendingMachineController {
 
     private final VendingMachineView view;
     private final VendingMachineService service;
     private List<Product> productList;
 
+    @Autowired
     public VendingMachineController(VendingMachineService service, VendingMachineView view) {
         this.service = service;
         this.view = view;
@@ -64,7 +68,7 @@ public class VendingMachineController {
             double productPrice = chosenProduct.getPrice();
             double currentBalance = service.getBalance();
             view.print("Chosen Product:\n" + chosenProduct.toString());
-            if(chosenProduct.getQuantity() < 1) {
+            if(chosenProduct.getQuantity() > 1) {
                 if(currentBalance > productPrice) {
                     service.setBalance(currentBalance - productPrice);
                     service.decrementStock(chosenProduct);
@@ -74,6 +78,7 @@ public class VendingMachineController {
                     view.displayErrorMessage("Transaction Failed: Insufficient balance!");
                 }
             } else {
+                System.out.println("went thru here");
                 throw new VendingMachinePersistenceException("Option does not exist!");
             }
         } catch(Exception e) {

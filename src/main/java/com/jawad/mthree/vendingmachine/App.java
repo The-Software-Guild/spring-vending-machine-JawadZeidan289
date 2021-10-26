@@ -10,16 +10,24 @@ import com.jawad.mthree.vendingmachine.service.VendingMachineServiceImpl;
 import com.jawad.mthree.vendingmachine.view.UserIO;
 import com.jawad.mthree.vendingmachine.view.UserIOConsoleImpl;
 import com.jawad.mthree.vendingmachine.view.VendingMachineView;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class App {
 
     public static void main(String[] args) {
-        UserIO myIo = new UserIOConsoleImpl();
-        VendingMachineView myView = new VendingMachineView(myIo);
-        VendingMachineDao myDao = new VendingMachineDaoImpl();
-        VendingMachineAuditDao myAuditDao = new VendingMachineAuditDaoImpl();
-        VendingMachineService myService = new VendingMachineServiceImpl(myDao, myAuditDao);
-        VendingMachineController controller = new VendingMachineController(myService, myView);
+//        UserIO myIo = new UserIOConsoleImpl();
+//        VendingMachineView myView = new VendingMachineView(myIo);
+//        VendingMachineDao myDao = new VendingMachineDaoImpl();
+//        VendingMachineAuditDao myAuditDao = new VendingMachineAuditDaoImpl();
+//        VendingMachineService myService = new VendingMachineServiceImpl(myDao, myAuditDao);
+//        VendingMachineController controller = new VendingMachineController(myService, myView);
+//        controller.run();
+
+        AnnotationConfigApplicationContext appContext = new AnnotationConfigApplicationContext();
+        appContext.scan("com.jawad.mthree.vendingmachine");
+        appContext.refresh();
+
+        VendingMachineController controller = appContext.getBean("vendingMachineController", VendingMachineController.class);
         controller.run();
     }
 }

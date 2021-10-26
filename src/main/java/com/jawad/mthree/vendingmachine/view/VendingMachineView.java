@@ -1,13 +1,17 @@
 package com.jawad.mthree.vendingmachine.view;
 
 import com.jawad.mthree.vendingmachine.model.Product;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class VendingMachineView {
 
     private final UserIO io;
 
+    @Autowired
     public VendingMachineView(UserIO io) {
         this.io = io;
     }
