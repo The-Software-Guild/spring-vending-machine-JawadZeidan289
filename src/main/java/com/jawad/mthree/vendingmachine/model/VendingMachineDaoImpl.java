@@ -81,7 +81,6 @@ public class VendingMachineDaoImpl implements VendingMachineDao {
 
             if(containsProductWithName(products, newProduct.getName())) {
                 // dont add
-                System.out.println("already exists");
             } else {
                 products.add(newProduct);
             }

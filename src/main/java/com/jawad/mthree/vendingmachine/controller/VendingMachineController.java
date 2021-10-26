@@ -64,13 +64,17 @@ public class VendingMachineController {
             double productPrice = chosenProduct.getPrice();
             double currentBalance = service.getBalance();
             view.print("Chosen Product:\n" + chosenProduct.toString());
-            if(currentBalance > productPrice) {
-                service.setBalance(currentBalance - productPrice);
-                service.decrementStock(chosenProduct);
-                view.printPurchaseSuccessMessage();
-                return true;
+            if(chosenProduct.getQuantity() < 1) {
+                if(currentBalance > productPrice) {
+                    service.setBalance(currentBalance - productPrice);
+                    service.decrementStock(chosenProduct);
+                    view.printPurchaseSuccessMessage();
+                    return true;
+                } else {
+                    view.displayErrorMessage("Transaction Failed: Insufficient balance!");
+                }
             } else {
-                view.displayErrorMessage("Transaction Failed: Insufficient balance!");
+                throw new VendingMachinePersistenceException("Option does not exist!");
             }
         } catch(Exception e) {
             view.displayErrorMessage("Option does not exist!");
